@@ -1,0 +1,30 @@
+class Solution {
+public:
+    
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(p==NULL && q==NULL){
+            return true;
+        }
+        if(p!=NULL && q==NULL){
+            return false;
+        }
+        if(p==NULL && q!=NULL){
+            return false;
+        }
+        bool left;
+        bool right;
+        if(p->val==q->val){
+             left=isSameTree(p->left,q->left);
+             right=isSameTree(p->right,q->right);
+        }
+        else{
+            return false;
+        }
+        if(left==true && right==true){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+};
