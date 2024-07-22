@@ -1,0 +1,20 @@
+class Solution
+{
+    public:
+    int missingNumber(int arr[], int n) 
+    { 
+       sort(arr,arr+n);
+       int pos=1;
+       for(int i=0;i<n;i++){
+           if(arr[i]>0){
+              if(pos==arr[i]){
+                  pos++;
+              }
+              else if(pos>arr[i]){
+                  continue;
+              }
+           }
+       }
+       return pos;
+    } 
+};
