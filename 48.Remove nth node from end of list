@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int countnode(ListNode* head){
+        ListNode* temp=head;
+        int count=0;
+        while(temp!=NULL){
+            count++;
+            temp=temp->next;
+        }
+        return count;
+    }
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+         if(head==NULL){
+            return NULL;
+         }
+         ListNode* curr=head;
+         ListNode* prev=NULL;
+         int total=countnode(head);
+         int k=total-n+1;
+         if(k==1){
+            head=curr->next;
+            delete(curr);
+            curr=NULL;
+            return head;
+         }
+         while(k>1){
+            prev=curr;
+            curr=curr->next;
+            k--;
+         }
+           prev->next=curr->next;
+            delete(curr);
+            curr=NULL;
+            return head;
+    }
+};
