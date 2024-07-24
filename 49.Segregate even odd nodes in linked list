@@ -1,0 +1,31 @@
+class Solution{
+public:
+    Node* divide(int N, Node *head){
+       int *even=new int[N];
+       int *odd=new int[N];
+       int k1=0;
+       int k2=0;
+       Node* temp=head;
+       while(temp!=NULL){
+           if(temp->data%2==0){
+               even[k1++]=temp->data;
+           }
+           else{
+               odd[k2++]=temp->data;
+           }
+           temp=temp->next;
+       }
+       temp=head;
+       for(int i=0;i<k1;i++){
+           temp->data=even[i];
+           temp=temp->next;
+       }
+       for(int i=0;i<k2;i++){
+           temp->data=odd[i];
+           temp=temp->next;
+       }
+       delete []even;
+       delete []odd;
+       return head;
+    }
+};
