@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int numOfMinutes(int n, int headID, vector<int>& manager, vector<int>& informTime) {
+       queue<pair<int,int>> q;
+       
+       int time=0;
+       unordered_map<int,list<int>> map;
+       for(int i=0;i<manager.size();i++){
+          if(manager[i]!=-1){
+            map[manager[i]].push_back(i);
+          }
+       }
+       vector<int> ans(n,0);
+       q.push({headID,0});
+       while(!q.empty()){
+        pair<int,int> front=q.front();
+        q.pop();
+        int node=front.first;
+        ans[node]=front.second;
+        for(auto neigh:map[node]){
+           q.push({neigh,ans[node]+informTime[node]});
+        }
+       }
+       for(int i=0;i<n;i++){
+          time=max(time,ans[i]);
+       } 
+       return time;
+    }
+};
