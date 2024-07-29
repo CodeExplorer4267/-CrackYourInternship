@@ -1,0 +1,50 @@
+class Solution
+{
+    public:
+    //Function to sort a linked list of 0s, 1s and 2s.
+    void addattail(Node* &head,Node* &tail,int d){
+        Node* newnode=new Node(d);
+        if(head==NULL && tail==NULL){
+            head=newnode;
+            tail=newnode;
+        }
+        else{
+           tail->next=newnode;
+        tail=newnode; 
+        }
+        
+    }
+    Node* segregate(Node *head) {
+      int countzero=0;
+      int countone=0;
+      int counttwo=0;
+      Node* temp=head;
+      while(temp!=NULL){
+          if(temp->data==0){
+              countzero++;
+          }
+          else if(temp->data==1){
+              countone++;
+          }
+          else if(temp->data==2){
+              counttwo++;
+          }
+          temp=temp->next;
+      }
+      Node* head2=NULL;
+      Node* tail=NULL;
+      while(countzero>0){
+          addattail(head2,tail,0);
+          countzero--;
+      }
+      while(countone>0){
+          addattail(head2,tail,1);
+          countone--;
+      }
+      while(counttwo>0){
+          addattail(head2,tail,2);
+          counttwo--;
+      }
+      return head2;
+    }
+};
