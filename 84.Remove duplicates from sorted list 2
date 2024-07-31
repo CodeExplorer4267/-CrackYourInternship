@@ -1,0 +1,57 @@
+class Solution {
+public:
+    void addatend(ListNode* &head,ListNode* &tail,int d){
+        ListNode* newnode=new ListNode(d);
+        if(head==NULL && tail==NULL){
+          head=newnode;
+          tail=newnode;
+        }
+        else{
+           tail->next=newnode;
+        tail=newnode;
+        }
+       
+    }
+    ListNode* reverse(ListNode* head){
+        ListNode* curr=head;
+        ListNode* next=NULL;
+        ListNode* prev=NULL;
+        while(curr!=NULL){
+            next=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=next;
+        }
+        return prev;
+    }
+    // bool operator()(pair<int,int> &a,pair<int,int> &b){
+    //     return a.first<b.first;
+    // }
+    vector<pair<int,int>> sortmap(unordered_map<int,int> &m){
+        vector<pair<int,int>> A;
+        for(auto i:m){
+            A.push_back(make_pair(i.first,i.second));
+        }
+        sort(A.begin(),A.end(),[](pair<int,int> &a,pair<int,int> &b){
+        return a.first<b.first;
+    });
+        return A;
+    }
+    ListNode* deleteDuplicates(ListNode* head) {
+        unordered_map<int,int> map;
+        ListNode* temp=head;
+        while(temp!=NULL){
+            map[temp->val]++;
+            temp=temp->next;
+        }
+        ListNode* head2=NULL;
+        ListNode* tail=NULL;
+        vector<pair<int,int>> sortAns=sortmap(map);
+        for(auto i:sortAns){
+            if(i.second==1){
+                addatend(head2,tail,i.first);
+            }
+        }
+        return head2;
+    }
+};
