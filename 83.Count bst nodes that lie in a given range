@@ -1,0 +1,23 @@
+class Solution{
+public:
+    int getCount(Node *root, int l, int h)
+    {
+        queue<Node*> q;
+        q.push(root);
+        int count=0;
+        while(!q.empty()){
+            Node* front=q.front();
+            q.pop();
+            if(front->data>=l && front->data<=h){
+                count++;
+            }
+            if(front->left){
+                q.push(front->left);
+            }
+            if(front->right){
+                q.push(front->right);
+            }
+        }
+        return count;
+    }
+};
