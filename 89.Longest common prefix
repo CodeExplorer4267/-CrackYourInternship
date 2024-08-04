@@ -1,0 +1,76 @@
+class Solution {
+public:
+    class TrieNode{
+        public:
+        int data;
+        int childcount;
+        TrieNode* children[26];
+        bool isTerminal;
+        TrieNode(char d){
+            data=d;
+            childcount=0;
+            for(int i=0;i<26;i++){
+                children[i]=NULL;
+            }
+            isTerminal=false;
+        }
+    };
+    class Trie{
+        public:
+       TrieNode* root;
+       Trie(char ch){
+          root=new TrieNode(ch);
+       }
+       void insert(string s){
+          insertutil(root,s);
+       }
+       void insertutil(TrieNode* root,string s){
+         if(s.length()==0){
+            root->isTerminal=true;
+            return;
+         }
+         int index=s[0]-'a';
+         TrieNode* child;
+         if(root->children[index]!=NULL){
+           child=root->children[index];
+         }
+         else{
+            child=new TrieNode(s[0]);
+            root->children[index]=child;
+            root->childcount++;
+         }
+         insertutil(child,s.substr(1));
+       }
+       void lcp(string first,string &ans){
+          for(int i=0;i<first.length();i++){
+             char ch=first[i];
+             if(root->childcount==1){
+                ans.push_back(ch);
+                int index=ch-'a';
+                root=root->children[index];
+             }
+             else{
+                break;
+             }
+             if(root->isTerminal==true){
+                break;
+             }
+          }
+
+       }
+    };
+    string longestCommonPrefix(vector<string>& strs) {
+        Trie* root=new Trie('\0');
+        int n=strs.size();
+        for(int i=0;i<n;i++){
+            if(strs[i].length()==0){
+                return "";
+            }
+            root->insert(strs[i]);
+        }
+        string first=strs[0];
+        string ans;
+        root->lcp(first,ans);
+        return ans;
+    }
+};
