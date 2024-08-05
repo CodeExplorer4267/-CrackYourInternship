@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<string> solve(int n,int open,int close,vector<string> &ans,string temp){
+        if(open==n && close==n){
+            ans.push_back(temp);
+        }
+        if(open<n){
+          solve(n,open+1,close,ans,temp+"(");
+        }
+        if(close<open){
+          solve(n,open,close+1,ans,temp+")");
+        }
+        return ans;
+    }
+    vector<string> generateParenthesis(int n) {
+       vector<string> ans;
+       int open=0;
+       int close=0;
+       string temp="";
+       ans=solve(n,open,close,ans,temp);
+       return ans; 
+    }
+};
