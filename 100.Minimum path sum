@@ -1,0 +1,26 @@
+class Solution {
+public:
+    long long solve(vector<vector<int>>& grid,__int128 x,__int128 y,vector<vector<int>> &dp,long long n,long long m){
+       if(x==0 && y==0){
+        return grid[0][0];
+       }
+       if(x<0 || y<0){
+        return INT_MAX;
+       }
+       if(dp[x][y]!=-1){
+        return dp[x][y];
+       }
+       long long up=grid[x][y]+solve(grid,x-1,y,dp,n,m);
+       long long left=grid[x][y]+solve(grid,x,y-1,dp,n,m);
+       dp[x][y]=min(up,left);
+       return dp[x][y];
+    }
+    int minPathSum(vector<vector<int>>& grid) {
+        __int128 n=grid.size();
+        __int128 m=grid[0].size();
+        __int128 sum=0;
+        std::vector<std::vector<int>> dp(n, std::vector<int>(m, -1));
+        long long ans=solve(grid,n-1,m-1,dp,n,m);
+        return ans;
+    }
+};
