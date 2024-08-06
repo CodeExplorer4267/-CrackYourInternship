@@ -1,0 +1,25 @@
+void solve(struct Node* root,vector<int> &v){
+    if(root==NULL){
+        return;
+    }
+    solve(root->left,v);
+    v.push_back(root->data);
+    solve(root->right,v);
+}
+float findMedian(struct Node *root)
+{
+    vector<int> inorder;
+    solve(root,inorder);
+    int n=inorder.size();
+    float median;
+    if(n%2==0){
+        int index1=(n-1)/2;
+        int index2=((n-1)/2+1);
+         median=(float)(inorder[index1]+inorder[index2])/2;
+    }
+    else{
+        int index=(n-1)/2;
+         median=inorder[index];
+    }
+    return median;
+}
