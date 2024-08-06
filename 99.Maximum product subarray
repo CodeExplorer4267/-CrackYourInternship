@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int n=nums.size();
+        __int128 maxi=INT_MIN;
+        __int128 pref=1;
+        __int128 suff=1;
+        for(long long int i=0;i<n;i++){
+            if(pref==0){
+                pref=1;
+            }
+            if(suff==0){
+                suff=1;
+            }
+            pref=pref*nums[i];
+            if(maxi<pref){
+                maxi=pref;
+            }
+            suff=suff*nums[n-i-1];
+            if(maxi<suff){
+                maxi=suff;
+            }
+        }
+        return maxi;
+    }
+};
