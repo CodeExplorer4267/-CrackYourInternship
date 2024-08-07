@@ -1,0 +1,52 @@
+class Solution {
+public:
+    void addatempty(ListNode*& h,ListNode*& t,int d){
+        ListNode* newnode=new ListNode(d);
+        if(h==NULL && t==NULL){
+            h=newnode;
+            t=newnode;
+        }
+        t->next=newnode;
+        t=newnode;
+    }
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        if(head==NULL || head->next==NULL){
+            return head;
+        }
+        ListNode* l=head;
+        ListNode* r=head;
+        stack<int> s;
+        while(left>1){
+            l=l->next;
+            left--;
+        }
+        while(right>1){
+            r=r->next;
+            right--;
+        }
+        ListNode* temp=head;
+        ListNode* dummyhead=NULL;
+        ListNode* dummytail=NULL;
+        while(temp!=l){
+            addatempty(dummyhead,dummytail,temp->val);
+            temp=temp->next;
+        }
+        while(l!=r){
+           s.push(l->val);
+            l=l->next;
+        }
+        s.push(r->val);
+        while(!s.empty()){
+            int top=s.top();
+            s.pop();
+            addatempty(dummyhead,dummytail,top);
+        }
+        while(r!=NULL){
+            r=r->next;
+            if(r!=NULL){
+              addatempty(dummyhead,dummytail,r->val);  
+            } 
+        }
+        return dummyhead;
+    }
+};
