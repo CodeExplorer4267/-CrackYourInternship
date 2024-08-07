@@ -1,0 +1,50 @@
+class Solution
+{
+    public:
+    Node* reverse(Node* head){
+        Node* curr=head;
+        Node* prev=NULL;
+        Node* next=NULL;
+        while(curr!=NULL){
+            next=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=next;
+        }
+        return prev;
+    }
+    void addatend(Node* &head,Node* &tail,int d){
+        Node* newnode=new Node(d);
+        if(head==NULL && tail==NULL){
+            head=newnode;
+            tail=newnode;
+        }
+        else{
+            tail->next=newnode;
+            tail=newnode;
+        }
+    }
+    Node *compute(Node *head)
+    {
+        Node* newhead=reverse(head);
+        Node* temp=newhead;
+        int maxi=INT_MIN;
+        stack<int> st;
+        while(temp!=NULL){
+            if(maxi<=temp->data){
+                maxi=temp->data;
+                st.push(temp->data);
+            }
+            temp=temp->next;
+        }
+        Node* head2=NULL;
+        Node* tail=NULL;
+        while(!st.empty()){
+            int top=st.top();
+            st.pop();
+            addatend(head2,tail,top);
+        }
+        return head2;
+    }
+    
+};
