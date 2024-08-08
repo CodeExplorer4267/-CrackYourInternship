@@ -1,0 +1,45 @@
+class Solution {
+public:
+    ListNode* findmid(ListNode* head){
+       ListNode* slow=head;
+       ListNode* fast=head->next;
+       while(fast!=NULL){
+        slow=slow->next;
+        fast=fast->next;
+        if(fast!=NULL){
+            fast=fast->next;
+        }
+       }
+       return slow;
+    }
+    ListNode* reverse(ListNode* head){
+        ListNode* curr=head;
+        ListNode* prev=NULL;
+        ListNode* next=NULL;
+        while(curr!=NULL){
+            next=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=next;
+        }
+        return prev;
+    }
+    void reorderList(ListNode* head) {
+        if(head==NULL){
+            return;
+        }
+      ListNode* middle=findmid(head);
+      ListNode* temp=middle->next;
+      middle->next=NULL;
+      temp=reverse(temp);
+      ListNode* curr=head;
+      while(temp!=NULL){
+        ListNode* temp_next=temp->next;
+        ListNode* next=curr->next;
+        curr->next=temp;
+        temp->next=next;
+        curr=next;
+        temp=temp_next;
+      }
+    }
+};
