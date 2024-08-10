@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool solve(vector<vector<char>>& board,int row,int col,int x,int y,vector<vector<int>> &vis,string &word,int i){
+         if (i >= word.length()) {
+            return true;
+        }
+        if (x < 0 || x >= row || y < 0 || y >= col || vis[x][y] || board[x][y] != word[i]) {
+            return false;
+        }
+        vis[x][y] = 1;
+        bool right = solve(board, row, col, x, y + 1, vis, word, i + 1);
+        bool down = solve(board, row, col, x + 1, y, vis, word, i + 1);
+        bool up = solve(board, row, col, x - 1, y, vis, word, i + 1);
+        bool left = solve(board, row, col, x, y - 1, vis, word, i + 1);
+        vis[x][y] = 0;
+        return right || down || up || left;
+    }
+    bool exist(vector<vector<char>>& board, string word) {
+        int n=board.size();
+        int m=board[0].size();
+        vector<vector<int>> vis(n,vector<int>(m,0));
+        int index=0;
+        bool ans;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+               if(board[i][j]==word[0]){
+                   ans=solve(board,n,m,i,j,vis,word,index);
+                   if(ans==true){
+                    return true;
+                   }
+               }
+            }
+        }
+        return false;
+    }
+};
