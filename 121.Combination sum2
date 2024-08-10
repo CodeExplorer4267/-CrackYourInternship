@@ -1,0 +1,33 @@
+class Solution {
+public:
+    void solve(vector<int>& c, int x,vector<vector<int>> &ans,vector<int> &vec,int i,map<vector<int>,bool> &map){
+        if(x==0){
+            if(!map[vec]){
+                map[vec]=true;
+                ans.push_back(vec);
+                return;
+            }
+        }
+        if(x<0){
+            return;
+        }
+        for(int index=i;index<c.size();index++){
+            if (index > i && c[index] == c[index - 1]) continue;
+            if(c[index]>x){
+                break;
+            }
+            vec.push_back(c[index]);
+            solve(c,x-c[index],ans,vec,index+1,map);
+            vec.pop_back();
+        }
+    }
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<vector<int>> ans;
+        vector<int> vec;
+        int index=0;
+        map<vector<int>,bool> map;
+        sort(candidates.begin(),candidates.end());
+        solve(candidates,target,ans,vec,index,map);
+        return ans;
+    }
+};
