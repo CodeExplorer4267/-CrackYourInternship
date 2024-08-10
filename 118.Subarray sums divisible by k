@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int subarraysDivByK(vector<int>& nums, int k) {
+        int n=nums.size();
+       vector<int> prefix(n+1);
+       prefix[0]=0;
+       int sum=0;
+       for(int i=0;i<n;i++){
+         sum+=nums[i];
+         prefix[i+1]=sum;
+       }
+       vector<int> mod(n+1);
+       for(int i=0;i<=n;i++){
+         int val=prefix[i]%k;
+         mod[i]=val;
+       }
+       unordered_map<int,int> map;
+       int count=0;
+       for(int i=0;i<=n;i++){
+          if(mod[i]<0){
+             mod[i]=mod[i]+k;
+             if(map.find(mod[i])!=map.end()){
+                count+=map[mod[i]];
+             }
+          }
+          else{
+            if(map.find(mod[i])!=map.end()){
+                count+=map[mod[i]];
+             }
+          }
+          map[mod[i]]++;
+       }
+       return count;
+    }
+}; 
