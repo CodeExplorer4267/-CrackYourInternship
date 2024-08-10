@@ -1,0 +1,21 @@
+class Solution {
+public:
+    void solve(int n,int k,int i,vector<vector<int>> &ans,vector<int> &vec){
+        if(k==0){
+            ans.push_back(vec);
+            return;
+        }
+        for(int index=i;index<=n;index++){
+            vec.push_back(index);
+            solve(n,k-1,index+1,ans,vec);
+            vec.pop_back();
+        }
+    }
+    vector<vector<int>> combine(int n, int k) {
+        int index=1;
+        vector<vector<int>> ans;
+        vector<int> vec;
+        solve(n,k,index,ans,vec);
+        return ans;
+    }
+};
