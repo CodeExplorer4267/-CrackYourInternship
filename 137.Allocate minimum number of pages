@@ -1,0 +1,49 @@
+class Solution {
+  public:
+    // Function to find minimum number of pages.
+    bool isPossible(int mid,int n,int m,int arr[]){
+        long long studentCount=1;
+        long long pageSum=0;
+        for(int i=0;i<n;i++){
+            if(pageSum+arr[i]<=mid){
+                pageSum+=arr[i];
+            }
+            else{
+                studentCount++;
+                if(studentCount>m || arr[i]>mid){
+                    return false;
+                }
+                pageSum=arr[i];
+            }
+        }
+        return true;
+    }
+    
+    long long findPages(int n, int arr[], int m) {
+        if(m>n){
+            return -1;
+        }
+        long long sum=0;
+        long long low=INT_MIN;
+        long long ans=-1;
+        for(int i=0;i<n;i++){
+            sum+=arr[i];
+            if(low<arr[i]){
+                low=arr[i];
+            }
+        }
+        long long high=sum;
+        int mid=low+(high-low)/2;
+        while(low<=high){
+            if(isPossible(mid,n,m,arr)){
+                ans=mid;
+                high=mid-1;
+            }
+            else{
+                low=mid+1;
+            }
+            mid=low+(high-low)/2;
+        }
+        return ans;
+    }
+};
