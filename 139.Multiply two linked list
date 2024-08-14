@@ -1,0 +1,25 @@
+class solution {
+ public:
+    long long multiplyTwoLists(Node *first, Node *second) {
+        const long long MOD = 1000000007;
+        long long num1 = 0, num2 = 0;
+        while (first != NULL) {
+            num1 = (num1 * 10 + first->data) % MOD;
+            first = first->next;
+        }
+        while (second != NULL) {
+            num2 = (num2 * 10 + second->data) % MOD;
+            second = second->next;
+        }
+        long long result = 0;
+        long long factor = 1;
+        while (num1 > 0) {
+            int digit = num1 % 10;
+            result = (result + (num2 * digit % MOD) * factor % MOD) % MOD;
+            num1 /= 10;
+            factor = (factor * 10) % MOD;
+        }
+        
+        return result;
+    }
+};
