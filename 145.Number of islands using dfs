@@ -1,0 +1,34 @@
+class Solution {
+  public:
+    // Function to find the number of islands.
+    void dfs(vector<vector<char>>& grid,int row,int col,int x,int y,
+    vector<vector<int>> &visited){
+        if(x>=row || y>=col || x<0 || y<0 || grid[x][y]=='0' || visited[x][y]){
+            return;
+        }
+        visited[x][y]=1;
+        dfs(grid,row,col,x,y+1,visited);
+        dfs(grid,row,col,x-1,y+1,visited);
+        dfs(grid,row,col,x-1,y,visited);
+        dfs(grid,row,col,x-1,y-1,visited);
+        dfs(grid,row,col,x,y-1,visited);
+        dfs(grid,row,col,x+1,y-1,visited);
+        dfs(grid,row,col,x+1,y,visited);
+        dfs(grid,row,col,x+1,y+1,visited);
+    }
+    int numIslands(vector<vector<char>>& grid) {
+        int n=grid.size();
+        int m=grid[0].size();
+       vector<vector<int>> visited(n,vector<int>(m,0));
+       int count=0;
+       for(int i=0;i<n;i++){
+           for(int j=0;j<m;j++){
+               if(grid[i][j]=='1' && visited[i][j]!=1){
+                   count++;
+                   dfs(grid,n,m,i,j,visited);
+               }
+           }
+       }
+       return count;
+    }
+};
